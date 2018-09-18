@@ -1,4 +1,4 @@
-package behavioral;
+package behavioral.chain_of_responsabilities;
 
 import java.util.Scanner;
 

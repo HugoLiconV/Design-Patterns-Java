@@ -1,0 +1,6 @@
+#Adapter
+##Description
+
+##Pros
+
+##Contras
