@@ -1,6 +1,7 @@
 package structural.decorator;
 
-public class Decorator {
+// TODO: 23/09/18 Explicar 
+public class Decorator { 
 
   public static void main(String[] args) {
     System.out.println("Test 1\n");

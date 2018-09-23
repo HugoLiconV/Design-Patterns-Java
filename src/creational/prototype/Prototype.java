@@ -12,16 +12,16 @@ public class Prototype {
       pages.add("Page #" + i);
     }
 
-//    SearchResult searchResult = new FederatedSearchResult(pages); // TODO: 20/09/18 Usar la interfaz o la clase?
-    FederatedSearchResult searchResult = new FederatedSearchResult(pages);
+//    SearchResult searchResult = new FederatedSearchResult(pages);
+    SearchResult searchResult = new FederatedSearchResult(pages);
 
 //    Clone search Result
-    SearchResult otherResult = searchResult.clone();
+    SearchResult otherResult =  searchResult.clone();
     otherResult.addPage("Page #5");
     otherResult.addPage("Page #6");
 
-    System.out.println("First Search\t" + searchResult.getPages());
-    System.out.println("Second Search\t: " + otherResult.getPages());
+//    System.out.println("First Search\t" + searchResult.getPages());
+//    System.out.println("Second Search\t: " + otherResult.getPages()); // TODO: 20/09/18 Usar la interfaz o la clase?
     
   }
 }
@@ -36,7 +36,6 @@ interface SearchResult {
 
   void addPage(String page);
 
-  List<String> getPages();
 }
 
 class FederatedSearchResult implements SearchResult {
@@ -70,7 +69,7 @@ class FederatedSearchResult implements SearchResult {
     pages.add(page);
   }
 
-  public List<String> getPages() { // TODO: 20/09/18 Se necesita poner getters and setters en la intefaz? 
+  public List<String> getPages() {
     return pages;
   }
 }

@@ -2,7 +2,7 @@ package creational.factory;
 
 public class Factory {
   public static void main(String[] args) {
-    System.out.println(ReaderFactory.getReader(TypeReader.DATABASE).read()); // TODO: 19/09/18 se puede usar enum?
+    System.out.println(ReaderFactory.getReader(TypeReader.DATABASE).read());
   }
 }
 

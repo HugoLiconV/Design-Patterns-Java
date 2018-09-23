@@ -19,7 +19,7 @@ public class Builder {
 class Test {
   Test printHello() {
     System.out.print("Hello ");
-    return this; // TODO: 19/09/18 Que regresa this?
+    return this;
   }
 
   Test printWorld() {
