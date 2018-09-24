@@ -1,75 +1,101 @@
 package structural.facade;
 
-public class Facade {
+import java.io.File;
+
+public class Facade { // TODO: 23/09/18 Explicar
 
   public static void main(String[] args) {
-    OrderFulfillmentController controller=new OrderFulfillmentController();
-    controller.facade=new OrderServiceFacadeImpl();
-    controller.orderProduct(9);
-    boolean result=controller.orderFulfilled;
-    System.out.println(result);
+    VideoConversionFacade converter = new VideoConversionFacade();
+    File mp4Video = converter.convertVideo("youtubevideo.ogg", "mp4");
   }
 }
 
-class Product {
-  public int productId;
-  public String name;
-  public Product(){}
-  public Product(int productId, String name){
-    this.productId=productId;
-    this.name=name;
+class VideoFile {
+
+  private String name;
+  private String codecType;
+
+  public VideoFile(String name) {
+    this.name = name;
+    this.codecType = name.substring(name.indexOf(".") + 1, name.length());
+  }
+
+  public String getCodecType() {
+    return codecType;
+  }
+
+  public String getName() {
+    return name;
   }
 }
 
-class InventoryService {
-  public static boolean isAvailable(Product product){
-    /*Check Warehouse database for product availability*/
-    return true;
-  }
+interface Codec {
+
 }
 
-class PaymentService {
-  public static boolean makePayment(){
-    /*Connect with payment gateway for payment*/
-    return true;
-  }
+class MPEG4CompressionCodec implements Codec {
+
+  public String type = "mp4";
+
 }
 
-class ShippingService {
-  public static void shipProduct(Product product){
-    /*Connect with external shipment service to ship product*/
-  }
+class OggCompressionCodec implements Codec {
+
+  public String type = "ogg";
 }
 
-interface OrderServiceFacade {
-  boolean placeOrder(int productId);
-}
 
-class OrderServiceFacadeImpl implements OrderServiceFacade{
-  public boolean placeOrder(int pId){
-    boolean orderFulfilled=false;
-    Product product=new Product();
-    product.productId=pId;
-    if(InventoryService.isAvailable(product))
-    {
-      System.out.println("Product with ID: "+ product.productId+" is available.");
-      boolean paymentConfirmed= PaymentService.makePayment();
-      if(paymentConfirmed){
-        System.out.println("Payment confirmed...");
-        ShippingService.shipProduct(product);
-        System.out.println("Product shipped...");
-        orderFulfilled=true;
-      }
+class CodecFactory {
+
+  public static Codec extract(VideoFile file) {
+    String type = file.getCodecType();
+    if (type.equals("mp4")) {
+      System.out.println("CodecFactory: extracting mpeg audio...");
+      return new MPEG4CompressionCodec();
+    } else {
+      System.out.println("CodecFactory: extracting ogg audio...");
+      return new OggCompressionCodec();
     }
-    return orderFulfilled;
   }
 }
 
-class OrderFulfillmentController {
-  OrderServiceFacade facade;
-  boolean orderFulfilled=false;
-  public void orderProduct(int productId) {
-    orderFulfilled=facade.placeOrder(productId);
-    System.out.println("OrderFulfillmentController: Order fulfillment completed. ");
+class BitrateReader {
+
+  public static VideoFile read(VideoFile file, Codec codec) {
+    System.out.println("BitrateReader: reading file...");
+    return file;
+  }
+
+  public static VideoFile convert(VideoFile buffer, Codec codec) {
+    System.out.println("BitrateReader: writing file...");
+    return buffer;
+  }
+}
+
+class AudioMixer {
+
+  public File fix(VideoFile result) {
+    System.out.println("AudioMixer: fixing audio...");
+    return new File("tmp");
+  }
+}
+
+class VideoConversionFacade {
+
+  public File convertVideo(String fileName, String format) {
+    System.out.println("VideoConversionFacade: conversion started.");
+    VideoFile file = new VideoFile(fileName);
+    Codec sourceCodec = CodecFactory.extract(file);
+    Codec destinationCodec;
+    if (format.equals("mp4")) {
+      destinationCodec = new OggCompressionCodec();
+    } else {
+      destinationCodec = new MPEG4CompressionCodec();
+    }
+    VideoFile buffer = BitrateReader.read(file, sourceCodec);
+    VideoFile intermediateResult = BitrateReader.convert(buffer, destinationCodec);
+    File result = (new AudioMixer()).fix(intermediateResult);
+    System.out.println("VideoConversionFacade: conversion completed.");
+    return result;
   }
 }
