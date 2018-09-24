@@ -17,3 +17,4 @@ The controls of your smartphone behave differently depending on the current stat
 * Can be an overkill if a state machine has only a few states or rarely changes.
 ## Source
 [State - Refactoring Guru](https://refactoring.guru/design-patterns/state)
+[Java State Design Pattern](https://codesjava.com/java-state-design-pattern)
